@@ -38,23 +38,23 @@ $GLOBALS['TL_DCA']['orm_avisota_message']['config']['onload_callback'][] = funct
 };
 
 $GLOBALS['TL_DCA']['orm_avisota_message']['metapalettes']['__google_analytics__'] = array(
-	'google_analytics' => array('ga_enable'),
+	'google_analytics' => array('gaEnable'),
 );
-$GLOBALS['TL_DCA']['orm_avisota_message']['metasubpalettes']['ga_enable']         = array('ga_campaign', 'ga_term');
+$GLOBALS['TL_DCA']['orm_avisota_message']['metasubpalettes']['gaEnable']         = array('gaCampaign', 'gaTerm');
 
 $GLOBALS['TL_DCA']['orm_avisota_message']['list']['operations'] = array_merge(
 	array(
 		'ga_enabled' => array(
-			'label' => &$GLOBALS['TL_LANG']['orm_avisota_message']['ga_enabled'],
+			'label' => &$GLOBALS['TL_LANG']['orm_avisota_message']['gaEnabled'],
 			'icon'  => 'assets/avisota/message-analytics-ga/images/analytics_icon.png',
 		),
 	),
 	$GLOBALS['TL_DCA']['orm_avisota_message']['list']['operations']
 );
 
-$GLOBALS['TL_DCA']['orm_avisota_message']['fields']['ga_enable']   = array
+$GLOBALS['TL_DCA']['orm_avisota_message']['fields']['gaEnable']   = array
 (
-	'label'     => &$GLOBALS['TL_LANG']['orm_avisota_message']['ga_enable'],
+	'label'     => &$GLOBALS['TL_LANG']['orm_avisota_message']['gaEnable'],
 	'default'   => false,
 	'exclude'   => true,
 	'inputType' => 'checkbox',
@@ -63,9 +63,9 @@ $GLOBALS['TL_DCA']['orm_avisota_message']['fields']['ga_enable']   = array
 		'tl_class'       => 'm12',
 	),
 );
-$GLOBALS['TL_DCA']['orm_avisota_message']['fields']['ga_campaign'] = array
+$GLOBALS['TL_DCA']['orm_avisota_message']['fields']['gaCampaign'] = array
 (
-	'label'     => &$GLOBALS['TL_LANG']['orm_avisota_message']['ga_campaign'],
+	'label'     => &$GLOBALS['TL_LANG']['orm_avisota_message']['gaCampaign'],
 	'default'   => false,
 	'exclude'   => true,
 	'inputType' => 'text',
@@ -73,9 +73,9 @@ $GLOBALS['TL_DCA']['orm_avisota_message']['fields']['ga_campaign'] = array
 		'tl_class' => 'w50',
 	),
 );
-$GLOBALS['TL_DCA']['orm_avisota_message']['fields']['ga_term']     = array
+$GLOBALS['TL_DCA']['orm_avisota_message']['fields']['gaTerm']     = array
 (
-	'label'     => &$GLOBALS['TL_LANG']['orm_avisota_message']['ga_term'],
+	'label'     => &$GLOBALS['TL_LANG']['orm_avisota_message']['gaTerm'],
 	'default'   => false,
 	'exclude'   => true,
 	'inputType' => 'text',
