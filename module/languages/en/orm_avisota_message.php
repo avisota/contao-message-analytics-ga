@@ -16,15 +16,15 @@
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['orm_avisota_message']['ga_enable'] = array(
+$GLOBALS['TL_LANG']['orm_avisota_message']['gaEnable'] = array(
 	'Enable google analytics',
 	'Enable google analytics tracking for this mailing.'
 );
-$GLOBALS['TL_LANG']['orm_avisota_message']['ga_campaign'] = array(
+$GLOBALS['TL_LANG']['orm_avisota_message']['gaCampaign'] = array(
 	'Campaign Name',
 	'Used for keyword analysis. Identify a specific product promotion or strategic campaign. Default: <em>The mailing subject</em>. Example: <code>utm_campaign=spring_sale</code>'
 );
-$GLOBALS['TL_LANG']['orm_avisota_message']['ga_term'] = array(
+$GLOBALS['TL_LANG']['orm_avisota_message']['gaTerm'] = array(
 	'Campaign Term ',
 	'Used for paid search. Use utm_term to note the keywords for this ad. Example: <code>utm_term=running+shoes</code>c'
 );
