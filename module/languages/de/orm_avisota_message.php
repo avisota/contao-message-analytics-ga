@@ -12,8 +12,11 @@
  */
 
 $GLOBALS['TL_LANG']['orm_avisota_message']['gaCampaign']['0']         = 'Kampagnenname';
+$GLOBALS['TL_LANG']['orm_avisota_message']['gaCampaign']['1']         = 'Wird für Keyword-Analyse benutzt. Geben Sie eine spezifische Promotion oder Kampagne an. Standardvorgabe <em>Betreff der Mail</em>. Beispiel: <code>utm_campaign=frühjahrs_angebote</code>';
 $GLOBALS['TL_LANG']['orm_avisota_message']['gaEnable']['0']           = 'Google Analytics aktivieren';
 $GLOBALS['TL_LANG']['orm_avisota_message']['gaEnable']['1']           = 'Aktivieren Sie Google Analytics für dieses Mailing.';
+$GLOBALS['TL_LANG']['orm_avisota_message']['gaTerm']['0']             = 'Kampagnenname';
+$GLOBALS['TL_LANG']['orm_avisota_message']['gaTerm']['1']             = 'Wird für bezahlte Suche genutzt. Verwenden Sie utm_term um die Keywords für diese Anzeige anzugeben. Beispiel: <code>utm_term=laufen+Schuhe</code>';
 $GLOBALS['TL_LANG']['orm_avisota_message']['ga_campain_title']        = 'Kampagne: %s';
 $GLOBALS['TL_LANG']['orm_avisota_message']['google_analytics_legend'] = 'Google Analytics';
 
