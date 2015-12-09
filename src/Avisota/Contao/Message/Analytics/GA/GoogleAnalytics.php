@@ -36,7 +36,7 @@ class GoogleAnalytics implements EventSubscriberInterface
     {
         return array(
             AvisotaMessageEvents::POST_RENDER_MESSAGE_CONTENT                   => array('injectGA', -500),
-            GetOperationButtonEvent::NAME . '[orm_avisota_message][ga_enabled]' => 'prepareButton',
+            GetOperationButtonEvent::NAME  => 'prepareButton',
         );
     }
 
@@ -111,6 +111,10 @@ class GoogleAnalytics implements EventSubscriberInterface
 
     public function prepareButton(GetOperationButtonEvent $event)
     {
+        if ($event->getCommand()->getName() != 'ga_enabled') {
+            return;
+        }
+
         /** @var EntityModel $model */
         $model = $event->getModel();
         /** @var Message $message */
