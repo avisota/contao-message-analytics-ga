@@ -29,109 +29,107 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GoogleAnalytics implements EventSubscriberInterface
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function getSubscribedEvents()
-	{
-		return array(
-			AvisotaMessageEvents::POST_RENDER_MESSAGE_CONTENT                   => array('injectGA', -500),
-			GetOperationButtonEvent::NAME . '[orm_avisota_message][ga_enabled]' => 'prepareButton',
-		);
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return array(
+            AvisotaMessageEvents::POST_RENDER_MESSAGE_CONTENT                   => array('injectGA', -500),
+            GetOperationButtonEvent::NAME . '[orm_avisota_message][ga_enabled]' => 'prepareButton',
+        );
+    }
 
-	/**
-	 * Inject the GA parameters to each url in the newsletter.
-	 *
-	 * @param RenderMessageEvent $event
-	 */
-	public function injectGA(PostRenderMessageContentEvent $event)
-	{
-		$message = $event->getMessage();
+    /**
+     * Inject the GA parameters to each url in the newsletter.
+     *
+     * @param RenderMessageEvent $event
+     */
+    public function injectGA(PostRenderMessageContentEvent $event)
+    {
+        $message = $event->getMessage();
 
-		if (!$message->getGaEnable()) {
-			return;
-		}
+        if (!$message->getGaEnable()) {
+            return;
+        }
 
-		$content = $event->getContent();
-		$query   = http_build_query(
-			array(
-				'utm_source'   => 'Newsletter ' . $message->getSubject(),
-				'utm_medium'   => 'E-Mail',
-				'utm_campaign' => $message->getGaCampaign() ? : $message->getSubject(),
-				'utm_term'     => $message->getGaTerm(),
-			)
-		);
-		$base    = \Environment::getInstance()->base;
+        $content = $event->getContent();
+        $query   = http_build_query(
+            array(
+                'utm_source'   => 'Newsletter ' . $message->getSubject(),
+                'utm_medium'   => 'E-Mail',
+                'utm_campaign' => $message->getGaCampaign() ?: $message->getSubject(),
+                'utm_term'     => $message->getGaTerm(),
+            )
+        );
+        $base    = \Environment::getInstance()->base;
 
-		$content = preg_replace_callback(
-			'~href=(["\'])(.*)\1~U',
-			function ($matches) use ($query, $base) {
-				$url = $matches[2];
+        $content = preg_replace_callback(
+            '~href=(["\'])(.*)\1~U',
+            function ($matches) use ($query, $base) {
+                $url = $matches[2];
 
-				if (preg_match('~^\w+:~', $url) && substr($url, 0, strlen($base)) != $base) {
-					return $matches[0];
-				}
+                if (preg_match('~^\w+:~', $url) && substr($url, 0, strlen($base)) != $base) {
+                    return $matches[0];
+                }
 
-				$parts = parse_url($url);
+                $parts = parse_url($url);
 
-				if ($parts['query']) {
-					$parts['query'] .= '&' . $query;
-				}
-				else {
-					$parts['query'] = $query;
-				}
+                if ($parts['query']) {
+                    $parts['query'] .= '&' . $query;
+                } else {
+                    $parts['query'] = $query;
+                }
 
-				$url = $parts['scheme'] . '://';
-				if ($parts['user']) {
-					$url .= $parts['user'];
+                $url = $parts['scheme'] . '://';
+                if ($parts['user']) {
+                    $url .= $parts['user'];
 
-					if ($parts['pass']) {
-						$url .= ':' . $parts['pass'];
-					}
+                    if ($parts['pass']) {
+                        $url .= ':' . $parts['pass'];
+                    }
 
-					$url .= '@';
-				}
-				$url .= $parts['host'];
-				if ($parts['port']) {
-					$url .= ':' . $parts['port'];
-				}
-				$url .= $parts['path'];
-				$url .= '?' . $parts['query'];
-				if ($parts['fragment']) {
-					$url .= '#' . $parts['fragment'];
-				}
+                    $url .= '@';
+                }
+                $url .= $parts['host'];
+                if ($parts['port']) {
+                    $url .= ':' . $parts['port'];
+                }
+                $url .= $parts['path'];
+                $url .= '?' . $parts['query'];
+                if ($parts['fragment']) {
+                    $url .= '#' . $parts['fragment'];
+                }
 
-				return sprintf('href="%s"', htmlentities($url, ENT_QUOTES, 'UTF-8'));
-			},
-			$content
-		);
+                return sprintf('href="%s"', htmlentities($url, ENT_QUOTES, 'UTF-8'));
+            },
+            $content
+        );
 
-		$event->setContent($content);
-	}
+        $event->setContent($content);
+    }
 
-	public function prepareButton(GetOperationButtonEvent $event)
-	{
-		/** @var EntityModel $model */
-		$model = $event->getModel();
-		/** @var Message $message */
-		$message = $model->getEntity();
+    public function prepareButton(GetOperationButtonEvent $event)
+    {
+        /** @var EntityModel $model */
+        $model = $event->getModel();
+        /** @var Message $message */
+        $message = $model->getEntity();
 
-		if ($message->getGaEnable()) {
-			$title = $message->getGaCampaign() ? $message->getGaCampaign() : $message->getSubject();
-			$title = sprintf($GLOBALS['TL_LANG']['orm_avisota_message']['ga_campain_title'], $title);
+        if ($message->getGaEnable()) {
+            $title = $message->getGaCampaign() ? $message->getGaCampaign() : $message->getSubject();
+            $title = sprintf($GLOBALS['TL_LANG']['orm_avisota_message']['ga_campain_title'], $title);
 
-			$generateHtmlEvent = new GenerateHtmlEvent(
-				'assets/avisota/message-analytics-ga/images/analytics_icon.png',
-				$title,
-				sprintf('title="%s"', htmlentities($title, ENT_QUOTES, 'UTF-8'))
-			);
-			$event->getDispatcher()->dispatch(ContaoEvents::IMAGE_GET_HTML, $generateHtmlEvent);
+            $generateHtmlEvent = new GenerateHtmlEvent(
+                'assets/avisota/message-analytics-ga/images/analytics_icon.png',
+                $title,
+                sprintf('title="%s"', htmlentities($title, ENT_QUOTES, 'UTF-8'))
+            );
+            $event->getDispatcher()->dispatch(ContaoEvents::IMAGE_GET_HTML, $generateHtmlEvent);
 
-			$event->setHtml($generateHtmlEvent->getHtml());
-		}
-		else {
-			$event->setHtml('');
-		}
-	}
+            $event->setHtml($generateHtmlEvent->getHtml());
+        } else {
+            $event->setHtml('');
+        }
+    }
 }
