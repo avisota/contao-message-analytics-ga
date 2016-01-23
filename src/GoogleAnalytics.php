@@ -2,12 +2,12 @@
 
 /**
  * Avisota newsletter and mailing system
- * Copyright (C) 2013 Tristan Lins
+ * Copyright © 2016 Sven Baumann
  *
  * PHP version 5
  *
- * @copyright  bit3 UG 2013
- * @author     Tristan Lins <tristan.lins@bit3.de>
+ * @copyright  way.vision 2016
+ * @author     Sven Baumann <baumann.sv@gmail.com>
  * @package    avisota/contao-message-element-article
  * @license    LGPL-3.0+
  * @filesource
@@ -27,10 +27,30 @@ use ContaoCommunityAlliance\Contao\Bindings\Events\Image\GenerateHtmlEvent;
 use ContaoCommunityAlliance\DcGeneral\Contao\View\Contao2BackendView\Event\GetOperationButtonEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+/**
+ * Class GoogleAnalytics
+ *
+ * @package Avisota\Contao\Message\Analytics\GA
+ */
 class GoogleAnalytics implements EventSubscriberInterface
 {
     /**
-     * {@inheritdoc}
+     * Returns an array of event names this subscriber wants to listen to.
+     *
+     * The array keys are event names and the value can be:
+     *
+     *  * The method name to call (priority defaults to 0)
+     *  * An array composed of the method name to call and the priority
+     *  * An array of arrays composed of the method names to call and respective
+     *    priorities, or 0 if unset
+     *
+     * For instance:
+     *
+     *  * array('eventName' => 'methodName')
+     *  * array('eventName' => array('methodName', $priority))
+     *  * array('eventName' => array(array('methodName1', $priority), array('methodName2')))
+     *
+     * @return array The event names to listen to
      */
     public static function getSubscribedEvents()
     {
@@ -43,7 +63,7 @@ class GoogleAnalytics implements EventSubscriberInterface
     /**
      * Inject the GA parameters to each url in the newsletter.
      *
-     * @param RenderMessageEvent $event
+     * @param PostRenderMessageContentEvent|RenderMessageEvent $event
      */
     public function injectGA(PostRenderMessageContentEvent $event)
     {
@@ -109,6 +129,9 @@ class GoogleAnalytics implements EventSubscriberInterface
         $event->setContent($content);
     }
 
+    /**
+     * @param GetOperationButtonEvent $event
+     */
     public function prepareButton(GetOperationButtonEvent $event)
     {
         if ($event->getCommand()->getName() != 'ga_enabled') {

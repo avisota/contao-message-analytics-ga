@@ -14,12 +14,6 @@
     "license": "LGPL-3.0+",
     "authors": [
         {
-            "name": "Tristan Lins",
-            "email": "tristan.lins@bit3.de",
-            "homepage": "http://bit3.de",
-            "role": "Developer"
-        },
-        {
             "name": "Sven Baumann",
             "email": "baumann.sv@gmail.com",
             "homepage": "http://avisota.org",
@@ -48,6 +42,11 @@
     "autoload": {
         "psr-4": {
             "Avisota\\Contao\\Message\\Analytics\\GA\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Avisota\\Test\\Contao\\Message\\Analytics\\GA\\": "tests/Test"
         }
     },
     "extra": {
