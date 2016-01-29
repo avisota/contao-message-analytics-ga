@@ -55,8 +55,13 @@ class GoogleAnalytics implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            AvisotaMessageEvents::POST_RENDER_MESSAGE_CONTENT                   => array('injectGA', -500),
-            GetOperationButtonEvent::NAME  => 'prepareButton',
+            AvisotaMessageEvents::POST_RENDER_MESSAGE_CONTENT => array(
+                array('injectGA', -500),
+            ),
+
+            GetOperationButtonEvent::NAME => array(
+                array('prepareButton'),
+            ),
         );
     }
 
