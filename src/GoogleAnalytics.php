@@ -27,6 +27,7 @@ use ContaoCommunityAlliance\Contao\Bindings\ContaoEvents;
 use ContaoCommunityAlliance\Contao\Bindings\Events\Image\GenerateHtmlEvent;
 use ContaoCommunityAlliance\DcGeneral\Contao\View\Contao2BackendView\Event\GetOperationButtonEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class GoogleAnalytics
@@ -88,7 +89,7 @@ class GoogleAnalytics implements EventSubscriberInterface
                 'utm_term'     => $message->getGaTerm(),
             )
         );
-        $base    = \Environment::getInstance()->base;
+        $base    = \Environment::get('base');
 
         $content = preg_replace_callback(
             '~href=(["\'])(.*)\1~U',
