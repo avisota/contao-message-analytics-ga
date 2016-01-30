@@ -186,9 +186,9 @@ class GoogleAnalytics implements EventSubscriberInterface
         $container = $event->getContainer();
 
         $palettesDefinition = $container->getPalettesDefinition();
-        $palettes = $palettesDefinition->getPalettes();
-        $gAPalette = null;
-        foreach($palettes as $palette) {
+        $palettes           = $palettesDefinition->getPalettes();
+        $gAPalette          = null;
+        foreach ($palettes as $palette) {
             if ($palette->getName() === '__google_analytics__') {
                 $gAPalette = $palette;
             }
@@ -202,7 +202,7 @@ class GoogleAnalytics implements EventSubscriberInterface
             if ($palette->getName() === '__google_analytics__') {
                 continue;
             }
-            foreach($gAPalette->getLegends() as $gALegend) {
+            foreach ($gAPalette->getLegends() as $gALegend) {
                 $palette->addLegend(clone $gALegend);
             }
         }
