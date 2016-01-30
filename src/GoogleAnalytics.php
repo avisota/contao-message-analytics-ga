@@ -19,15 +19,12 @@ use Avisota\Contao\Core\Service\SuperglobalsService;
 use Avisota\Contao\Entity\Message;
 use Avisota\Contao\Message\Core\Event\AvisotaMessageEvents;
 use Avisota\Contao\Message\Core\Event\PostRenderMessageContentEvent;
-use Avisota\Contao\Message\Core\Event\PostRenderMessageTemplateEvent;
 use Avisota\Contao\Message\Core\Event\RenderMessageEvent;
-use Avisota\Contao\Message\Core\Template\MutablePreRenderedMessageTemplate;
 use Contao\Doctrine\ORM\DataContainer\General\EntityModel;
 use ContaoCommunityAlliance\Contao\Bindings\ContaoEvents;
 use ContaoCommunityAlliance\Contao\Bindings\Events\Image\GenerateHtmlEvent;
 use ContaoCommunityAlliance\DcGeneral\Contao\View\Contao2BackendView\Event\GetOperationButtonEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class GoogleAnalytics
