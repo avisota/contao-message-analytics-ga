@@ -163,7 +163,7 @@ class GoogleAnalytics implements EventSubscriberInterface
                 $title,
                 sprintf('title="%s"', htmlentities($title, ENT_QUOTES, 'UTF-8'))
             );
-            $event->getDispatcher()->dispatch(ContaoEvents::IMAGE_GET_HTML, $generateHtmlEvent);
+            $event->getEnvironment()->getEventDispatcher()->dispatch(ContaoEvents::IMAGE_GET_HTML, $generateHtmlEvent);
 
             $event->setHtml($generateHtmlEvent->getHtml());
         } else {
