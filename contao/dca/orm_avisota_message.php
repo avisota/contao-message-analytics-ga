@@ -17,25 +17,6 @@
  * Table orm_avisota_message
  * Entity Avisota\Contao:Message
  */
-$GLOBALS['TL_DCA']['orm_avisota_message']['config']['onload_callback'][] = function (
-	\ContaoCommunityAlliance\DcGeneral\Contao\Compatibility\DcCompat $dc
-) {
-	$dataDefinition     = $dc->getEnvironment()->getDataDefinition();
-	$palettesDefinition = $dataDefinition->getPalettesDefinition();
-
-	if (!$palettesDefinition->hasPaletteByName('__google_analytics__')) {
-		return;
-	}
-
-	$legends = $palettesDefinition->getPaletteByName('__google_analytics__')->getLegends();
-
-	$palettes = $palettesDefinition->getPalettes();
-	foreach ($palettes as $palette) {
-		foreach ($legends as $legend) {
-			$palette->addLegend(clone $legend);
-		}
-	}
-};
 
 $GLOBALS['TL_DCA']['orm_avisota_message']['metapalettes']['__google_analytics__'] = array(
 	'google_analytics' => array('gaEnable'),

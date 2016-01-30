@@ -24,6 +24,11 @@ use Contao\Doctrine\ORM\DataContainer\General\EntityModel;
 use ContaoCommunityAlliance\Contao\Bindings\ContaoEvents;
 use ContaoCommunityAlliance\Contao\Bindings\Events\Image\GenerateHtmlEvent;
 use ContaoCommunityAlliance\DcGeneral\Contao\View\Contao2BackendView\Event\GetOperationButtonEvent;
+use ContaoCommunityAlliance\DcGeneral\Data\DefaultModel;
+use ContaoCommunityAlliance\DcGeneral\Data\PropertyValueBag;
+use ContaoCommunityAlliance\DcGeneral\Factory\Event\BuildDataDefinitionEvent;
+use ContaoCommunityAlliance\DcGeneral\Factory\Event\PreCreateDcGeneralEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -60,6 +65,10 @@ class GoogleAnalytics implements EventSubscriberInterface
 
             GetOperationButtonEvent::NAME => array(
                 array('prepareButton'),
+            ),
+
+            BuildDataDefinitionEvent::NAME => array(
+                array('injectGALegend'),
             ),
         );
     }
@@ -166,6 +175,40 @@ class GoogleAnalytics implements EventSubscriberInterface
             $event->setHtml($generateHtmlEvent->getHtml());
         } else {
             $event->setHtml('');
+        }
+    }
+
+    /**
+     * @param BuildDataDefinitionEvent $event
+     */
+    public function injectGALegend(BuildDataDefinitionEvent $event)
+    {
+        if ($event->getContainer()->getName() != 'orm_avisota_message') {
+            return;
+        }
+
+        $container = $event->getContainer();
+
+        $palettesDefinition = $container->getPalettesDefinition();
+        $palettes = $palettesDefinition->getPalettes();
+        $gAPalette = null;
+        foreach($palettes as $palette) {
+            if ($palette->getName() === '__google_analytics__') {
+                $gAPalette = $palette;
+            }
+        }
+
+        if (!$gAPalette) {
+            return;
+        }
+
+        foreach ($palettes as $palette) {
+            if ($palette->getName() === '__google_analytics__') {
+                continue;
+            }
+            foreach($gAPalette->getLegends() as $gALegend) {
+                $palette->addLegend(clone $gALegend);
+            }
         }
     }
 }
