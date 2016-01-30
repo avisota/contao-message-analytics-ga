@@ -15,6 +15,7 @@
 
 namespace Avisota\Contao\Message\Analytics\GA;
 
+use Avisota\Contao\Core\Service\SuperglobalsService;
 use Avisota\Contao\Entity\Message;
 use Avisota\Contao\Message\Core\Event\AvisotaMessageEvents;
 use Avisota\Contao\Message\Core\Event\PostRenderMessageContentEvent;
@@ -143,6 +144,11 @@ class GoogleAnalytics implements EventSubscriberInterface
             return;
         }
 
+        /** @var \Pimple $container */
+        global $container;
+        /** @var SuperglobalsService $superGlobals */
+        $superGlobals = $container['avisota.superglobals'];
+
         /** @var EntityModel $model */
         $model = $event->getModel();
         /** @var Message $message */
@@ -150,7 +156,7 @@ class GoogleAnalytics implements EventSubscriberInterface
 
         if ($message->getGaEnable()) {
             $title = $message->getGaCampaign() ? $message->getGaCampaign() : $message->getSubject();
-            $title = sprintf($GLOBALS['TL_LANG']['orm_avisota_message']['ga_campain_title'], $title);
+            $title = sprintf($superGlobals->getLanguage('orm_avisota_message/ga_campain_title'), $title);
 
             $generateHtmlEvent = new GenerateHtmlEvent(
                 'assets/avisota/message-analytics-ga/images/analytics_icon.png',
