@@ -12,3 +12,9 @@
  * @license    LGPL-3.0+
  * @filesource
  */
+
+use Avisota\Contao\Message\Analytics\GA\GoogleAnalytics;
+
+return array(
+    new GoogleAnalytics()
+);

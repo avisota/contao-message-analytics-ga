@@ -20,26 +20,26 @@ use Doctrine\DBAL\Schema\Schema;
 
 class Version20140530 extends AbstractMigration
 {
-	public function up(Schema $schema)
-	{
-		if (!$schema->hasTable('orm_avisota_message')) {
-			return;
-		}
+    public function up(Schema $schema)
+    {
+        if (!$schema->hasTable('orm_avisota_message')) {
+            return;
+        }
 
-		$table = $schema->getTable('orm_avisota_message');
+        $table = $schema->getTable('orm_avisota_message');
 
-		if ($table->hasColumn('ga_enable')) {
-			$this->addSql('ALTER TABLE orm_avisota_message CHANGE ga_enable gaEnable TINYINT(1) DEFAULT NULL');
-		}
-		if ($table->hasColumn('ga_campaign')) {
-			$this->addSql('ALTER TABLE orm_avisota_message CHANGE ga_campaign gaCampaign VARCHAR(255) DEFAULT NULL');
-		}
-		if ($table->hasColumn('ga_term')) {
-			$this->addSql('ALTER TABLE orm_avisota_message CHANGE ga_term gaTerm VARCHAR(255) DEFAULT NULL');
-		}
-	}
+        if ($table->hasColumn('ga_enable')) {
+            $this->addSql('ALTER TABLE orm_avisota_message CHANGE ga_enable gaEnable TINYINT(1) DEFAULT NULL');
+        }
+        if ($table->hasColumn('ga_campaign')) {
+            $this->addSql('ALTER TABLE orm_avisota_message CHANGE ga_campaign gaCampaign VARCHAR(255) DEFAULT NULL');
+        }
+        if ($table->hasColumn('ga_term')) {
+            $this->addSql('ALTER TABLE orm_avisota_message CHANGE ga_term gaTerm VARCHAR(255) DEFAULT NULL');
+        }
+    }
 
-	public function down(Schema $schema)
-	{
-	}
+    public function down(Schema $schema)
+    {
+    }
 }

@@ -29,10 +29,10 @@
         "source": "https://github.com/avisota/contao-message-analytics-ga"
     },
     "require": {
-        "php": ">=5.3",
-        "contao-community-alliance/composer-plugin": "~2.3",
-        "contao/core": ">=2.11.11,<3.6",
-        "avisota/contao-message": "3.0.x-dev"
+        "php": ">=5.4",
+        "contao/core": ">=3.5,<3.6",
+        "contao-community-alliance/composer-plugin": "~2.4",
+        "avisota/contao-message": "~3.0"
     },
     "require-dev": {
         "phpcq/all-tasks": "~1.1"
